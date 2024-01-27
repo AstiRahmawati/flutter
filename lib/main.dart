@@ -1,9 +1,12 @@
 import 'package:belajar/column_widget.dart';
 import 'package:belajar/container_widget.dart';
+import 'package:belajar/gridview/grid_basic.dart';
+import 'package:belajar/gridview/grid_builder.dart';
+import 'package:belajar/gridview/grid_count.dart';
+import 'package:belajar/gridview/grid_fullscreen.dart';
 import 'package:belajar/latihan1.dart';
 import 'package:belajar/latihan2.dart';
 import 'package:belajar/latihan3.dart';
-import 'package:belajar/listview/latihanList.dart';
 import 'package:belajar/listview/latihanPersib.dart';
 import 'package:belajar/listview/list_basic.dart';
 import 'package:belajar/listview/list_builder.dart';
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
             style: TextStyle(backgroundColor: Colors.white),
             ),
         ),
-        body: LatihanPersib(),
+        body: GridCount(),
       ),
     );
   }
