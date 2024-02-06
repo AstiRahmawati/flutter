@@ -1,37 +1,39 @@
 import 'package:belajar/helpers/size_helpers.dart';
 import 'package:belajar/screens/output_form_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class BelajarForm extends StatefulWidget {
-  const BelajarForm({super.key});
+class BookingGalaxy extends StatefulWidget {
+  const BookingGalaxy({super.key});
 
   @override
-  State<BelajarForm> createState() => _BelajarFormState();
+  State<BookingGalaxy> createState() => _BookingGalaxyState();
 }
 
-class _BelajarFormState extends State<BelajarForm> {
+class _BookingGalaxyState extends State<BookingGalaxy> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  TextEditingController namaController = TextEditingController();
-  TextEditingController jkController = TextEditingController();
-  TextEditingController tglLahirController = TextEditingController();
-  String _pilihAgama = "";
+  //mendeskrisikan variabel input
+  TextEditingController namaCotroller = TextEditingController();
+  String _pilihTujuan = "";
+  TextEditingController jumlahCotroller = TextEditingController();
+  TextEditingController tglPergiCotroller = TextEditingController();
 
-  final List<String> agama = [
-    "Islam",
-    "Protestand",
-    "Katholik",
-    "Budha",
-    "Atheis"
+  final List<String> tujuan = [
+    "Galaxy Bima Sakti",
+    "Galaxy Andromeda ",
+    "Galaxy Sombrero",
+    "Galaxy The Rose",
+    "Galaxy Sculptor",
   ];
 
-  void initState() {
-    tglLahirController.text = '';
+  void iniState() {
+    tglPergiCotroller.text = '';
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,12 +60,12 @@ class _BelajarFormState extends State<BelajarForm> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Formulir Data",
+                            "Formulir Reservasi",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           SizedBox(height: 18),
                           TextFormField(
-                            controller: namaController,
+                            controller: namaCotroller,
                             decoration: InputDecoration(
                               hintText: "Nama Lengkap",
                               border: OutlineInputBorder(),
@@ -76,57 +78,12 @@ class _BelajarFormState extends State<BelajarForm> {
                             },
                           ),
                           SizedBox(height: 18),
-                          TextFormField(
-                            controller: jkController,
-                            decoration: InputDecoration(
-                              hintText: "Jenis Kelamin",
-                              border: OutlineInputBorder(),
-                            ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Input Jenis Kelamin';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: 18),
-                          TextFormField(
-                            controller: tglLahirController,
-                            decoration: InputDecoration(
-                              hintText: "Tanggal Lahir",
-                              border: OutlineInputBorder(),
-                            ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Input Tanggal Lahir';
-                              }
-                              return null;
-                            },
-                            onTap: () async {
-                              DateTime? pickedDate = await showDatePicker(
-                                context: context, 
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900), 
-                                lastDate: DateTime(2100),
-                                );
-                                if (pickedDate != null) {
-                                  String tgl =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
-                                  setState(() {
-                                    tglLahirController.text = tgl;
-                                  });
-                                } else {
-                                  print("Tanggal tidak terpilih");
-                                }
-                            },
-                          ),
-                          SizedBox(height: 18),
                           DropdownButtonFormField(
                             decoration: InputDecoration(
-                              hintText: "Agama",
-                              labelText: "Pilih Agama",
-                              border: OutlineInputBorder()),
-                            items: agama.map((String items) {
+                                hintText: "Tujuan",
+                                labelText: "Pilih Tujuan",
+                                border: OutlineInputBorder()),
+                            items: tujuan.map((String items) {
                               int index = 0;
                               return DropdownMenuItem(
                                 value: items,
@@ -135,8 +92,53 @@ class _BelajarFormState extends State<BelajarForm> {
                             }).toList(),
                             onChanged: (String? newValue) {
                               setState(() {
-                                _pilihAgama = newValue!;
+                                _pilihTujuan = newValue!;
                               });
+                            },
+                          ),
+                          SizedBox(height: 18),
+                          TextFormField(
+                            controller: jumlahCotroller,
+                            decoration: InputDecoration(
+                              hintText: "Jumlah Tiket",
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Input Jumlah Tiket';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: 18),
+                          TextFormField(
+                            controller: tglPergiCotroller,
+                            decoration: InputDecoration(
+                              hintText: "Tanggal Berangkat",
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Input Tanggal Berangkat';
+                              }
+                              return null;
+                            },
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1900),
+                                lastDate: DateTime(2100),
+                              );
+                              if (pickedDate != null) {
+                                String tgl =
+                                    DateFormat('yyyy-MM-dd').format(pickedDate);
+                                setState(() {
+                                  tglPergiCotroller.text = tgl;
+                                });
+                              } else {
+                                print("tanggal tidak dipilih");
+                              }
                             },
                           ),
                           SizedBox(height: 18),
@@ -145,10 +147,10 @@ class _BelajarFormState extends State<BelajarForm> {
                             height: displayHeight(context) * 0.075,
                             child: ElevatedButton(
                               style: ButtonStyle(
-                                backgroundColor: 
-                                MaterialStateProperty.all(Colors.red),
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.blue),
                                 shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
+                                    RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24),
                                     side: BorderSide(color: Colors.black),
@@ -167,7 +169,7 @@ class _BelajarFormState extends State<BelajarForm> {
                         ],
                       ),
                     ),
-                    ),
+                  ),
                 ),
               ],
             ),
@@ -182,18 +184,67 @@ class _BelajarFormState extends State<BelajarForm> {
     if (!isValid) {
       return;
     } else {
+      _showAlertDialog(context);
       _formKey.currentState!.save();
-      String nama = namaController.text;
-      String jk = jkController.text;
-      String agama = _pilihAgama;
-      String tglLahir = tglLahirController.text;
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => OutputFormScreen(
-            nama: nama, jk: jk, tglLahir: tglLahir, agama: agama),
-        ),
-        );
     }
   }
-}
+
+  void _showAlertDialog(BuildContext context){
+    showCupertinoModalPopup<void>(
+      context: context, 
+      builder: (BuildContext context) => 
+      CupertinoAlertDialog(
+        title: const Text('Alert'),
+        content: const Text('Apakah anda sudah yakin?'),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text("Tidak"),
+          ),
+          CupertinoDialogAction(
+            isDestructiveAction: true,
+            onPressed: () {
+              int harga = 0;
+              String img = "";
+              String nama = namaCotroller.text;
+              String tglPergi = tglPergiCotroller.text;
+              String jumlah = jumlahCotroller.text;
+              String tujuan = _pilihTujuan;
+              if (tujuan == "Galaxy Bima Sakti"){
+                harga = 500000;
+                img = "images/bima-sakti.png";
+              } else if (tujuan == "Galaxy Andromeda"){
+                harga = 700000;
+                img = "assets/images/andromeda.jpg";
+              } else if (tujuan == "Galaxy Sombrero"){
+                harga = 400000;
+                img = "images/sombrero.jpg";
+              }
+              else if (tujuan == "Galaxy The Rose"){
+                harga = 800000;
+                img = "images/the-rose.jpg";
+              }
+              else if (tujuan == "Galaxy Sculptor"){
+                harga = 600000;
+                img = "images/sculptor.jpg";
+              }
+             
+              int totalHarga = harga * int.parse(jumlah);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OutputBookingScreen(
+                      nama: nama, jumlah: jumlah, tglPergi: tglPergi, tujuan: tujuan, harga: harga.toString(), totalHarga: totalHarga.toString(), img: img),
+                ),
+              );
+            },
+            child: const Text("Ya"),
+          )
+        ],
+      ),
+      );
+  }
+  }

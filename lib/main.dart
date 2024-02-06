@@ -37,9 +37,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => NavigationMenu(),
         'second' : (context) => ListGalaxyScreen(),
-        'third' :(context) => BelajarForm(),
+        'third' :(context) => BookingGalaxy(),
       },
-    );
+    );          
   }
 }
 

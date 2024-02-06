@@ -17,7 +17,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
   List _pages = [
     HomeScreen(),
     ListGalaxyScreen(),
-    BelajarForm(),
+    BookingGalaxy(),
   ];
 
   _changeTab(int index) {
